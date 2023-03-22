@@ -10,35 +10,6 @@ function Header () {
 
   return ( 
     <>
-    {/* <header>
-  <div className="container-fluid bg-dark text-light">
-    <div className="header-cont d-flex gap-3 px-4 py-3 align-content-center">
-      <div className="row">
-        <p className="col-md-2 p-0 m-0 text-nowrap">CALL US:</p>
-        <div className="col-md-5 d-flex gap-1">
-          <img width="20px" height="20px" src={phoneLogo} alt="phone logo" />
-          <p className="text-nowrap p-0 m-0">(02)8-921-0000</p>
-        </div>
-        <div className="col-md-5 d-flex gap-1">
-          <img width="20px" height="20px" src={phoneLogo} alt="phone logo" />
-          <p className="text-nowrap p-0 m-0">(02)8-921-0000</p>
-        </div>
-      </div>
-      <div className="d-flex gap-3 align-content-center ms-auto">
-        <a href="/">
-          <img width="25px" src="https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_facebook-256.png" alt="facebook logo" />
-        </a>
-        <a href="/">
-          <img width="25px" src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Twitter3_colored_svg-512.png" alt="Twitter logo" />
-        </a>
-        <a href="/">
-          <img width="25px" src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Instagram_colored_svg_1-128.png" alt="Instagram logo" />
-        </a>
-      </div>
-    </div>
-  </div>
-  </header> */} 
-
 <header>
   <Container fluid className="bg-dark text-light">
     <div className="header-cont d-flex gap-3 px-4 py-3 align-content-center">
@@ -68,7 +39,7 @@ function Header () {
   </Container>
   </header>
 
-    <Navbar expand="lg" className="navbar">
+    <Navbar expand="lg" className="navbar" sticky="top">
       <Container fluid className='mx-4'>
         <Navbar.Brand href="/" className="navbar-brand me-5 px-2">
           <img width="140px" src={logo} alt='logo' />
@@ -125,9 +96,50 @@ function Header () {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* LOG IN MODAL */}
+        <div className="modal modal-signin bg-opacity-25" tabIndex={-1} role="dialog" id="modalSignin">
+          <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div className="modal-content rounded-5 shadow">
+              <div className="modal-header p-5 pb-4 border-bottom-0">
+                <h4 className="fw-bold mb-0 fs-2">MyLOTUS Account</h4>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+              </div>
+              <div className="modal-body p-5 pt-0">
+                <form className="my-4">
+                  <div className="form-floating mb-3">
+                    <input type="email" className="form-control rounded-3" id="floatingInput" placeholder="name@example.com" />
+                    <label htmlFor="floatingInput">Email address</label>
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input type="password" className="form-control rounded-3" id="floatingPassword" placeholder="Password" />
+                    <label htmlFor="floatingPassword">Password</label>
+                  </div>
+                  <input type="checkbox" defaultValue="lsRememberMe" id="rememberMe" /> <label htmlFor="rememberMe">Remember me</label>
+                  <a href="myAccount.html" className="w-100 my-2 btn btn-lg rounded-3 btn-warning" type="submit">Sign in</a>
+                  <small className="text-muted">By clicking Sign in, you agree to the terms of use.</small>
+                  <hr className="my-4 mx-3" />
+                  <a className="text-center text-dark text-decoration-none" href="Create-Account.html"><h4><span className="text-muted">Not a member? </span>Register</h4></a>
+                  <h5 className="my-3 text-center">or sign in with</h5>
+                  <div className="d-flex gap-4 justify-content-center">
+                    <a href="#">
+                      <img width={50} className="p-0" src="https://cdn1.iconfinder.com/data/icons/social-media-2285/512/Colored_Facebook3_svg-512.png" alt />
+                    </a>
+                    <a href="#">
+                      <img width={50} className="p-0" src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png" alt />
+                    </a>
+                    <a href="#">
+                      <img width={50} className="p-0" src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Instagram_colored_svg_1-512.png" alt />
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
     </Navbar>
     </>
   );
 }
-
 export default Header;

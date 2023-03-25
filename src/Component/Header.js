@@ -1,12 +1,34 @@
-import { Button,Container,Form,Nav,Navbar,Modal,Row,Col,Image} from "react-bootstrap";
-import logo from '../assets/logo-1.jpg'
-import phoneLogo from "../assets/icons8-phone-24.png"
+import { Button,Container,Form,Nav,Navbar,Modal,Row,Col,Image, FormControl, FormFloating, FormLabel, FormCheck} from "react-bootstrap";
+import {Link, useNavigate} from "react-router-dom";
+import logo from '../assets/logo-1.jpg';
+import phoneLogo from "../assets/icons8-phone-24.png";
 import React, { useState } from 'react';
 
 function Header () {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [showAcc, setShowAcc] = useState(false);
+
+  const handleCloseAcc = () => setShowAcc(false);
+  const handleShowAcc = () => setShowAcc(true);
+
+  const [emailLogIn , setEmailLogIn] = useState('');
+  const [passwordLogIn , setPasswordLogIn] = useState('');
+  const navigate = useNavigate();
+  
+  
+  const validateLogIn = (e) => {
+    if(emailLogIn === "admin@gmail.com" && passwordLogIn === "root")
+    {
+      navigate("/profile");
+      alert("successful log in");
+    }else{
+      alert("your input is invalid");
+      e.preventDefault();
+    }
+  }
 
   return ( 
     <>
@@ -42,21 +64,20 @@ function Header () {
     <Navbar expand="lg" className="navbar" sticky="top">
       <Container fluid className='mx-4'>
         <Navbar.Brand href="/" className="navbar-brand me-5 px-2">
-          <img width="140px" src={logo} alt='logo' />
+          <Image width="140px" src={logo} alt='logo' />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto my-2 my-lg-0"
+            className="me-auto my-2 my-lg-0 d-flex align-items-end"
             style={{ maxHeight: '100px' }}
             
           >
-            <Nav.Link href="/action1">PRODUCTS</Nav.Link>
-            <Nav.Link href="/action2">PROMOTIONS</Nav.Link>
-  
-            <Nav.Link href="/3">SERVICES</Nav.Link>
+            <Nav.Link><Link className="productLink" to="/products">PRODUCTS</Link></Nav.Link>
+            <Nav.Link><Link className="promotionLink" to="/promotions">PROMOTIONS</Link></Nav.Link>
+            <Nav.Link><Link className="servicesLink" to="/services">SERVICES</Link></Nav.Link>
           </Nav>
-          <Form className="d-flex">
+          <Form className="d-flex my-auto">
             <Form.Control
               type="search"
               placeholder="Search"
@@ -65,12 +86,12 @@ function Header () {
             />
             <Button variant="outline-light">Search</Button>
           </Form>
-          <div className="navbar-nav m-2">
+          <Navbar className="navbar-nav m-2">
                 <Nav.Link bg-none href="#modalScrollableCenter" data-bs-toggle="modal" onClick={handleShow} className="wish-zoom ms-auto nav-item nav-link">
-                    <img width="30px" height="30px" src="https://cdn3.iconfinder.com/data/icons/jolly-icons-free/64/cart_64.png" alt=""/><span className="badge bg-danger">1</span></Nav.Link>
-                <a className="ms-auto wish-zoom nav-item nav-link" href="#modalSignin"  data-bs-toggle="modal">
-                    <img width="30px" height="30px" src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user-64.png" alt="Log in"/></a>
-                </div>
+                    <Image width="30px" height="30px" src="https://cdn3.iconfinder.com/data/icons/jolly-icons-free/64/cart_64.png" alt=""/><span className="badge bg-danger">1</span></Nav.Link>
+                <Nav.Link className="ms-auto wish-zoom nav-item nav-link" onClick={handleShowAcc}>
+                    <Image width="30px" height="30px" src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user-64.png" alt="Log in"/></Nav.Link>
+                </Navbar>
         </Navbar.Collapse>
       </Container>
     
@@ -78,14 +99,14 @@ function Header () {
       
         <Modal.Header closeButton>
           <Modal.Title className='mx-3'>
-            <h3 className="modal-title">Your Cart</h3>
+            <Modal.Title>Your Cart</Modal.Title>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='mx-3'>
           <div className="d-md-flex gap-2">
-            <img width="50px" height="50px" src="./projectassets/acc1.jpg" alt=""/><p className="mb-0 fw-bolder ms-3">LOTUS BRUSHLESS 18V X-Line Cordless Impact Drill w/2pcs Battery Charger & Hard Case LTHD18VLI-2BLX</p>
-                        <button type="button" className="py-0 text-nowrap btn-sm btn btn-danger text-light">Cancel</button>
-                        <button type="button" data-bs-target="" className="py-0 text-nowrap btn-sm btn btn-primary text-light" data-href="checkout.html">Check-out</button></div>
+            <Image width="50px" height="50px" src="./projectassets/acc1.jpg" alt=""/><p className="mb-0 fw-bolder ms-3">LOTUS BRUSHLESS 18V X-Line Cordless Impact Drill w/2pcs Battery Charger & Hard Case LTHD18VLI-2BLX</p>
+                        <Button variant="danger" type="button" className="py-0 text-nowrap btn-sm text-light">Cancel</Button>
+                        <Button variant="primary" type="button" data-bs-target="" className="py-0 text-nowrap btn-sm text-light" data-href="checkout.html">Check-out</Button></div>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleClose}>
@@ -97,51 +118,52 @@ function Header () {
         </Modal.Footer>
       </Modal>
 
-      {/* LOG IN MODAL */}
-      <div className="modal modal-signin bg-opacity-25" tabIndex={-1} role="dialog" id="modalSignin">
-  <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div className="modal-content rounded-5 shadow">
-      <div className="modal-header p-5 pb-4 border-bottom-0">
-        {/* <h1 class="modal-title fs-5" >Modal title</h1> */}
-        <h4 className="fw-bold mb-0 fs-2">MyLOTUS Account</h4>
-        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-      </div>
-      <div className="modal-body p-5 pt-0">
-        <form className="my-4">
-          <div className="form-floating mb-3">
-            <input type="email" className="form-control rounded-3" id="floatingInput" placeholder="name@example.com" />
-            <label htmlFor="floatingInput">Email address</label>
-          </div>
-          <div className="form-floating mb-3">
-            <input type="password" className="form-control rounded-3" id="floatingPassword" placeholder="Password" />
-            <label htmlFor="floatingPassword">Password</label>
-          </div>
-          <input type="checkbox" defaultValue="lsRememberMe" id="rememberMe" /> <label htmlFor="rememberMe">Remember me</label>
-          <a href="myAccount.html" className="w-100 my-2 btn btn-lg rounded-3 btn-warning" type="submit">Sign in</a>
-          <small className="text-muted">By clicking Sign in, you agree to the terms of use.</small>
-          <hr className="my-4 mx-3" />
-          <a className="text-center text-dark text-decoration-none" href="Create-Account.html"><h4><span className="text-muted">Not a member? </span>Register</h4></a>
-          <h5 className="my-3 text-center">or sign in with</h5>
-          <div className="d-flex gap-4 justify-content-center">
-            <a href="/">
-              <img width={50} className="p-0" src="https://cdn1.iconfinder.com/data/icons/social-media-2285/512/Colored_Facebook3_svg-512.png" alt="facebook" />
-            </a>
-            <a href="/">
-              <img width={50} className="p-0" src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png" alt="gmail" />
-            </a>
-            <a href="/">
-              <img width={50} className="p-0" src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Instagram_colored_svg_1-512.png" alt="intagram" />
-            </a>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+       <Modal role="dialog" show={showAcc} onHide={handleCloseAcc}>
+       <Modal.Header className="p-5 pb-4 border-bottom-0" closeButton>
+          <Modal.Title className="fw-bold">MyLOTUS Account</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className=" p-5 pt-0">
+          <Form>
+            <FormFloating className="mb-3">
+              <FormControl className="rounded-3" type="email" id="floatingEmaill" placeholder="Email address" autoComplete="false" onChange={(e) => {setEmailLogIn(e.target.value)}} required />
+              <FormLabel htmlFor="floatingEmaill">Email Address</FormLabel>
+            </FormFloating>
+            <FormFloating className="mb-3">
+              <FormControl className="rounded-3" type="password" id="floatingPassword" placeholder="Password" onChange={(e)=> {setPasswordLogIn(e.target.value)}} required />
+              <FormLabel htmlFor="floatingPassword">Password</FormLabel>
+            </FormFloating>
+            <FormCheck type="checkbox" label="Remember me"/>
+              <Button className="w-100 my-2 btn btn-lg rounded-3 btn-warning" type="submit" onClick={ validateLogIn }>Sign in</Button>
+              <small className="text-muted">By clicking Sign in, you agree to the terms of use.</small>
+              <hr className="my-4 mx-3" />
+              <Link className="text-center text-dark text-decoration-none" to="/register" onClick={()=> setShowAcc(false)}><h4><span className="text-muted">Not a member? </span>Register</h4></Link>
+              <h5 className="my-3 text-center">or sign in with</h5>
+              <div className="d-flex gap-4 justify-content-center">
+                <Link href="/" target={"_blank"}>
+                  <Image width={50} className="p-0" src="https://cdn1.iconfinder.com/data/icons/social-media-2285/512/Colored_Facebook3_svg-512.png" alt="facebook" />
+                </Link>
+                <Link href="/" target={"_blank"}>
+                  <Image width={50} className="p-0" src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png" alt="gmail" />
+                </Link>
+                <Link href="/" target={"_blank"}>
+                  <Image width={50} className="p-0" src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Instagram_colored_svg_1-512.png" alt="intagram" />
+                </Link>
+                </div>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+       </Modal>
     </Navbar>
     </>
+
   );
-}
+  }
+
 export default Header;

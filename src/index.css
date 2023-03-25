@@ -225,6 +225,28 @@ swiper-slide img {
   .active {
     color: grey;
   }
+  .productLink, .promotionLink, .servicesLink {
+    color: rgba(255,255,255,.55);
+    font-weight: 700;
+  }
+  .productLink:hover, .promotionLink:hover, .servicesLink:hover {
+    color: rgba(255, 255, 255, 0.829);
+    font-weight: 700;
+  }
+  .productLink:focus, .promotionLink:focus, .servicesLink:focus {
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+  }
+  #confirmPassword {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + .75rem);
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+  }
+
+
+  
   
 
 

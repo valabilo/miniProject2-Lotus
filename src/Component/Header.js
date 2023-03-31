@@ -1,8 +1,9 @@
-import { Button,Container,Form,Nav,Navbar,Modal,Row,Col,Image, FormControl, FormFloating, FormLabel, FormCheck} from "react-bootstrap";
+import { Button,Container,Form,Nav,Navbar,Modal,Row,Col,Image, FormControl, FormFloating, FormLabel, FormCheck, ModalDialog} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import logo from '../assets/logo-1.jpg';
 import phoneLogo from "../assets/icons8-phone-24.png";
 import React, { useState } from 'react';
+import Axios from "axios";
 
 function Header () {
   const [show, setShow] = useState(false);
@@ -16,19 +17,25 @@ function Header () {
 
   const [emailLogIn , setEmailLogIn] = useState('');
   const [passwordLogIn , setPasswordLogIn] = useState('');
+  const [loginStatus, setLoginStatus] = useState("");
   const navigate = useNavigate();
   
   
   const validateLogIn = (e) => {
-    if(emailLogIn === "admin@gmail.com" && passwordLogIn === "root")
-    {
-      navigate("/profile");
-      alert("successful log in");
-    }else{
-      alert("your input is invalid");
+    Axios.post("http://localhost:3001/login", {
+        email: emailLogIn,
+        password: passwordLogIn,
+    }).then((response) => {
+        if(response.data.message){
+            setLoginStatus(response.data.message);
+            document.getElementById("invalidLogIn").style.display = "block";
+        }else{
+          navigate("/profile");
+          setShowAcc(false);
+        }
+      })
       e.preventDefault();
-    }
-  }
+}
 
   return ( 
     <>
@@ -95,8 +102,7 @@ function Header () {
         </Navbar.Collapse>
       </Container>
     
-    <Modal id="modalScrollableCenter" className='modal-lg modal-dialog-centered modal-dialog-scrollable shadow-lg modal-dialog' centered show={show} onHide={handleClose}>
-      
+      <Modal size="lg" id="modalScrollableCenter" centered className="modal-dialog-centered modal-dialog-scrollable shadow-lg" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className='mx-3'>
             <Modal.Title>Your Cart</Modal.Title>
@@ -116,13 +122,14 @@ function Header () {
             Save Changes
           </Button>
         </Modal.Footer>
-      </Modal>
+        </Modal>
 
        <Modal role="dialog" show={showAcc} onHide={handleCloseAcc}>
        <Modal.Header className="p-5 pb-4 border-bottom-0" closeButton>
           <Modal.Title className="fw-bold">MyLOTUS Account</Modal.Title>
         </Modal.Header>
         <Modal.Body className=" p-5 pt-0">
+        <h1 id="invalidLogIn" style={{color: 'red', fontSize: '15px', textAlign: 'center', marginTop: '20px', display: "none"}}>{loginStatus}</h1>
           <Form>
             <FormFloating className="mb-3">
               <FormControl className="rounded-3" type="email" id="floatingEmaill" placeholder="Email address" autoComplete="false" onChange={(e) => {setEmailLogIn(e.target.value)}} required />
